@@ -1,15 +1,15 @@
 # defining the necessary functions:
 
-def build_structures(input_string, only_rows=False):
+def build_structures(input_str, only_rows=False):
     # rows
-    row_1 = list(input_string[0:3])
-    row_2 = list(input_string[3:6])
-    row_3 = list(input_string[6:9])
+    row_1 = list(input_str[0:3])
+    row_2 = list(input_str[3:6])
+    row_3 = list(input_str[6:9])
 
     # columns
-    column_1 = list(input_string[0::3])
-    column_2 = list(input_string[1::3])
-    column_3 = list(input_string[2::3])
+    column_1 = list(input_str[0::3])
+    column_2 = list(input_str[1::3])
+    column_3 = list(input_str[2::3])
 
     # diagonals
     d_left = list(input_string[::4])
@@ -74,6 +74,7 @@ def check_for_completion(matrix_structure, func):
     if empty_cells and func is None:
         return 'Game not finished'
 
+
 # end of section where functions where defined.
 
 input_string = input().strip()
@@ -89,7 +90,7 @@ game_grid = build_structures(input_string, only_rows=True)
 # all_conditions contains all possible conditions that have to be checked to
 # determine if the game is won. This variable is therefore used for the
 # following functions: check_for_win, check_for_draw and check_for_completion.
-# It causes an error if uses in the function check_for_impossible
+# It causes an error if it is used in the function check_for_impossible
 
 all_conditions = build_structures(input_string, only_rows=False)
 
