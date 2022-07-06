@@ -167,6 +167,10 @@ def convert_field_to_string(field):
     return ''.join([items for items in field.values()])
 
 
+valid_coordinates = ['1 1', '1 2', '1 3',
+                     '2 1', '2 2', '2 3',
+                     '3 1', '3 2', '3 3']
+
 user_input = input().strip()
 
 field_of_glory = build_structures(user_input, True)
@@ -178,7 +182,26 @@ new_structure = {}
 
 while True:
 
-    user_input = input().strip()
+    while True:
+
+        try:
+
+            user_input = input().strip()
+
+            if user_input and (not list(user_input)[0].isnumeric() or not list(user_input)[2].isnumeric()):
+                raise ValueError('no numbers')
+
+            if user_input and user_input not in valid_coordinates:
+                raise IndexError('out of range')
+
+        except ValueError:
+            print('You should enter numbers!')
+
+        except IndexError:
+            print('Coordinates should be from 1 to 3!')
+
+        else:
+            break
 
     check_for_none = insert_values(structure_for_input, user_input)
 
