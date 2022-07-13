@@ -18,15 +18,17 @@ def check_for_win(grid):
 
     if len([item for item in list_of_fields if item == '_']) == 9:
         return False
-    if len(set(list_of_fields[0:3])) == 1:
+    if len(set(list_of_fields[0:3])) == 1 and '_' not in set(list_of_fields[0:3]):
         return True
-    if len(set(list_of_fields[3:6])) == 1:
+    if len(set(list_of_fields[3:6])) == 1 and '_' not in set(list_of_fields[3:6]):
         return True
-    if len(set(list_of_fields[6:9])) == 1:
+    if len(set(list_of_fields[6:9])) == 1 and '_' not in set(list_of_fields[6:9]):
         return True
-    if len(set([list_of_fields[0], list_of_fields[4], list_of_fields[8]])) == 1:
+    if len(set([list_of_fields[0], list_of_fields[4], list_of_fields[8]])) == 1 and \
+            '_' not in set([list_of_fields[0], list_of_fields[4], list_of_fields[8]]):
         return True
-    if len(set([list_of_fields[2], list_of_fields[4], list_of_fields[6]])) == 1:
+    if len(set([list_of_fields[2], list_of_fields[4], list_of_fields[6]])) == 1 and \
+            '_' not in set([list_of_fields[2], list_of_fields[4], list_of_fields[6]]):
         return True
 
     return False
@@ -42,7 +44,7 @@ def set_value(grid, field, turn):
     for key, value in grid.items():
 
         if key == field and (value == 'X' or value == 'O'):
-            return False
+            raise ValueError('field is occupied')
 
         if key == field and (value != 'X' and value != 'O'):
             grid[key] = turn
@@ -98,9 +100,6 @@ while game_won is not True:
     try:
         game_grid = set_value(game_grid, user_input, turn_of_player)
 
-        if game_grid is False:
-            raise ValueError('occupied')
-
     except ValueError:
         print('This cell is occupied! Choose another one!')
         continue
@@ -109,13 +108,8 @@ while game_won is not True:
 
     draw = check_for_draw(game_grid, check_for_win(game_grid))
 
-
     won = check_for_win(game_grid)
 
     print(draw, won)
 
-
     continue
-
-
-
