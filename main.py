@@ -15,7 +15,7 @@ def print_field(grid):
 
 def check_for_win(grid):
     list_of_fields = [value for value in grid.values()]
-
+    # rows
     if len([item for item in list_of_fields if item == '_']) == 9:
         return False
     if len(set(list_of_fields[0:3])) == 1 and '_' not in set(list_of_fields[0:3]):
@@ -24,6 +24,17 @@ def check_for_win(grid):
         return True
     if len(set(list_of_fields[6:9])) == 1 and '_' not in set(list_of_fields[6:9]):
         return True
+    # columns
+    if len(set([list_of_fields[0], list_of_fields[3], list_of_fields[6]])) == 1 and \
+            '_' not in set([list_of_fields[0], list_of_fields[3], list_of_fields[6]]):
+        return True
+    if len(set([list_of_fields[1], list_of_fields[4], list_of_fields[7]])) == 1 and \
+            '_' not in set([list_of_fields[1], list_of_fields[4], list_of_fields[7]]):
+        return True
+    if len(set([list_of_fields[2], list_of_fields[5], list_of_fields[8]])) == 1 and \
+            '_' not in set([list_of_fields[2], list_of_fields[5], list_of_fields[8]]):
+        return True
+    # diagonals
     if len(set([list_of_fields[0], list_of_fields[4], list_of_fields[8]])) == 1 and \
             '_' not in set([list_of_fields[0], list_of_fields[4], list_of_fields[8]]):
         return True
@@ -37,14 +48,14 @@ def check_for_win(grid):
 def check_for_draw(grid, game_won_func):
     list_of_fields = [value for value in grid.values()]
     return len([item for item in list_of_fields if item == '_']) == 0 and \
-           game_won_func is False
+        game_won_func is False
 
 
 def set_value(grid, field, turn):
     for key, value in grid.items():
 
         if key == field and (value == 'X' or value == 'O'):
-            raise ValueError('field is occupied')
+            raise ValueError('occupied')
 
         if key == field and (value != 'X' and value != 'O'):
             grid[key] = turn
@@ -110,6 +121,19 @@ while game_won is not True:
 
     won = check_for_win(game_grid)
 
-    print(draw, won)
+    if draw is True:
+        print_field(game_grid)
+        print('Draw')
+        break
+
+    if won is True:
+        print_field(game_grid)
+        print('X wins' if turn_of_player == 'X' else 'O wins')
+        break
+
+    if turn_of_player == 'X':
+        turn_of_player = 'O'
+    else:
+        turn_of_player = 'X'
 
     continue
